@@ -1,6 +1,6 @@
 //SVG dimensions
-var svgWidth = 1000;
-var svgHeight = 680;
+var svgWidth = 880;
+var svgHeight = 640;
 
 var chartMargin = {
     top: 60,
@@ -26,27 +26,38 @@ var chartGroup = svg.append("g")
 d3.csv("data.csv").then(function(data) {
     console.log(data);
     var x = d3.scaleLinear()
-        .domain([0,100])
-        .range([0, svgWidth])
+        .domain([0,26])
+        .range([0, chartWidth])
     svg.append("g")
-        .attr("transform", "translate(0, "+ chartHeight +")")
+        .attr("transform", "translate(100, "+ chartHeight +  ")")
         .call(d3.axisBottom(x));
     var y = d3.scaleLinear()
-        .domain([0,100])
-        .range([svgHeight, 0])
+        .domain([0,30])
+        .range([chartHeight-30, 0])
     svg.append("g")  
+        .attr("transform", "translate(100, 30)")
         .call(d3.axisLeft(y))  
 
-    svg.append("g")
-        .selectAll("dot")
+    var gdots =  svg.selectAll("g.dot")
         .data(data)
-        .enter()
-        .append("circle")
-            .attr("cx", function(data) { return x(data.healthcare)})
-            .attr("cy", function(data) { return x(data.smokes)})
-            .attr("r", 1.5)
-            .attr("fill", "#69b3a2")
+        .enter().append('g');
 
+    // svg.append("g")
+    //     .selectAll("dot")
+    //     .data(data)
+    //     .enter()
+    gdots.append("circle")
+        .attr("cx", function(data) { return x(data.healthcare) })
+        .attr("cy", function(data) { return y(data.smokes) })
+        .attr("r", 14)
+        .attr("fill", "#69b3a2")
+        .attr("transform", "translate(100, 30)")
+ 
+    gdots.append("text")
+        .text(function(data) { return data.abbr })
+        .attr("x", function(data) { return x(data.healthcare) })
+        .attr("y", function(data) { return y(data.smokes) })
+        .attr("transform", "translate(88, 34)")
 });
 
 
