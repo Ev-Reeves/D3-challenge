@@ -25,12 +25,28 @@ var chartGroup = svg.append("g")
 //Loading csv data
 d3.csv("data.csv").then(function(data) {
     console.log(data);
-    data.forEach(function(data) {
-        data.healthcare= +data.healthcare
-    });
-    data.forEach(function(data) {
-        data.smokes= +data.smokes
-    });
+    var x = d3.scaleLinear()
+        .domain([0,100])
+        .range([0, svgWidth])
+    svg.append("g")
+        .attr("transform", "translate(0, "+ chartHeight +")")
+        .call(d3.axisBottom(x));
+    var y = d3.scaleLinear()
+        .domain([0,100])
+        .range([svgHeight, 0])
+    svg.append("g")  
+        .call(d3.axisLeft(y))  
+
+    svg.append("g")
+        .selectAll("dot")
+        .data(data)
+        .enter()
+        .append("circle")
+            .attr("cx", function(data) { return x(data.healthcare)})
+            .attr("cy", function(data) { return x(data.smokes)})
+            .attr("r", 1.5)
+            .attr("fill", "#69b3a2")
+
 });
 
 
