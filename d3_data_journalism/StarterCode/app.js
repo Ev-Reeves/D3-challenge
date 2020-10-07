@@ -22,6 +22,20 @@ var svg = d3
 var chartGroup = svg.append("g")
     .attr("transform", `translate(${chartMargin.left}, ${chartMargin.top})`);
 
+//Loading csv data
+d3.csv("data.csv").then(function(data) {
+    console.log(data);
+    data.forEach(function(data) {
+        data.healthcare= +data.healthcare
+    });
+    data.forEach(function(data) {
+        data.smokes= +data.smokes
+    });
+});
+
+
+
+
 
 
     
