@@ -58,6 +58,16 @@ d3.csv("data.csv").then(function(data) {
         .attr("x", function(data) { return x(data.healthcare) })
         .attr("y", function(data) { return y(data.smokes) })
         .attr("transform", "translate(88, 34)")
+
+    chartGroup.append("text")
+    .attr("transform", `translate(${chartWidth / 2}, ${chartHeight })`)
+        .classed("healthcare-text text", true)
+        .text("Healthcare Coverage Rate (%)");
+    
+    chartGroup.append("text")
+    .attr("transform", `translate(-20, ${chartHeight/2 }) rotate(270)`)
+        .classed("healthcare-text text", true)
+        .text("Smoking (%)");
 });
 
 
